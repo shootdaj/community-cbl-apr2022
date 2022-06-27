@@ -1,4 +1,4 @@
-# Cloud Builder Live - March 2022
+# Cloud Builder Live - April 2022
 
 In this episode of Cloud Builder Live we will be using the [Azure Container Apps](https://docs.microsoft.com/en-us/azure/container-apps/) (in preview) to deploy a microservice REST API to query Covid-19 statistics around the world and then continuous deploy the entire thing from a GitHub repository.  We will also be using [Azure Load Testing](https://docs.microsoft.com/en-us/azure/load-testing/overview-what-is-azure-load-testing) (also in preview) to test scaling of our microservice.
 
