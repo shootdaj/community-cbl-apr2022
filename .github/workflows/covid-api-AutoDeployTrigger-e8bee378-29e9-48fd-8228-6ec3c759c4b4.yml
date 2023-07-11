@@ -1,0 +1,42 @@
+name: Trigger auto deployment for covid-api
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ start ]
+    paths:
+    - '**'
+    - '.github/workflows/covid-api-AutoDeployTrigger-e8bee378-29e9-48fd-8228-6ec3c759c4b4.yml'
+
+  # Allow mannually trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.COVIDAPI_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: cloudbuildertestregistry.azurecr.io
+          registryUsername: ${{ secrets.COVIDAPI_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.COVIDAPI_REGISTRY_PASSWORD }}
+          containerAppName: covid-api
+          resourceGroup: cloudbuilder-docker-test
+          imageToBuild: cloudbuildertestregistry.azurecr.io/covid-api:${{ github.sha }}
+          
+
+     
+
